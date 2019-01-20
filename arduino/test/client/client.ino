@@ -3,11 +3,11 @@
 #include <nRF24L01.h>
 #include <MirfHardwareSpiDriver.h>
  
-const int ledPin = 2;
+const int ssrpin = 9;
  
 void setup(){
-  pinMode(ledPin, OUTPUT);
-  digitalWrite(ledPin, LOW);
+  pinMode(ssrpin, OUTPUT);
+  digitalWrite(ssrpin, LOW);
   Serial.begin(9600);
   Mirf.spi = &MirfHardwareSpi;
   Mirf.init();
@@ -34,10 +34,9 @@ void loop(){
     }
   }
   Mirf.getData(recvData);
-  if (recvData[0] == buttonOpen) {  // スイッチを押していない情報であれば
-    digitalWrite(ledPin, LOW);
-  } else {                          // スイッチを押した情報であれば
-    digitalWrite(ledPin, HIGH);
+  if (recvData[0] == 'A') {  
+    if(recvData[1]) digitalWrite(ssrpin,HIGH);
+    else digitalWrite(ssrpin,LOW);
   }
   Serial.print("recvData: ");
   for (int i = 0;i < Mirf.payload;i++) {
