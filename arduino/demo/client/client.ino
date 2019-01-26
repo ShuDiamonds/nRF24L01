@@ -25,11 +25,17 @@ void loop() {
   if (Mirf.dataReady()) {
     Mirf.getData(recvData);
     if (recvData[0] == 'A') {
-      if (recvData[1] == '1') digitalWrite(ssrpin, HIGH);
-      else digitalWrite(ssrpin, LOW);
-    }
-    //debug
-    Serial.print("recvData: ");
+      if (recvData[1] == '1'){
+        digitalWrite(ssrpin, HIGH);
+        Serial.println("high");
+        }
+      else {
+        digitalWrite(ssrpin, LOW);
+        Serial.println("low");
+        }
+      }
+      //debug
+      Serial.print("recvData: ");
     for (int i = 0; i < Mirf.payload; i++) {
       Serial.print(recvData[i]);
       Serial.print(" ");
@@ -41,4 +47,5 @@ void loop() {
 
   delay(100);
 }
+
 
